@@ -54,4 +54,15 @@ def write_csv(file_name: str, file_data):   #we now need to write a csv file for
 
 #write_csv("no_blanks.csv", rows_to_keep) #this file now contains no missing blanks.
 
+#Finally we need to concatenate the birth information.
 
+def join(file_name, col1, col2, new_file, new_row_name):
+    with open(file_name) as csvfile:
+        reader = csv.reader(csvfile)
+        with open(new_file,'w') as new:
+            writer = csv.writer(new)
+            for row in reader:
+                new_row_name = [' '.join([row[col1], row[col2]])] + row[3:] # this has worked sort of but not the way I would have wanted.
+                writer.writerow(new_row_name)
+
+join("no_blanks.csv",1,2,"test_2.csv",'test')
