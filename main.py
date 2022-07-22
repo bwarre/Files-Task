@@ -31,6 +31,27 @@ def remove_column(file_name: str, column_name: str,new_file_name):
 #remove_column("columns_removed_Zscore.csv", 'gender','columns_removed_Zscore_gender.csv')
 #remove_column("columns_removed_Zscore_gender.csv", 'syllabus','columns_removed_Zscore_gender_syllabus.csv')
 
+#Next step is to remove any rows with missing values.
+rows_to_keep = []
+def remove_missing_values(file_name):
+    with open(file_name, newline='') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter=",")
+        iter_csv = iter(csvreader)
+        for row in iter_csv:
+            missing_value = False
+            for i in range(len(row)):
+                if row[i] == '-':
+                    missing_value = True
+            if missing_value == False:
+                rows_to_keep.append(row)
 
+#remove_missing_values('columns_removed_Zscore_gender_syllabus.csv')
+
+def write_csv(file_name: str, file_data):   #we now need to write a csv file for data that does not have 3 absences.
+    with open(file_name, "w", newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerows(file_data)
+
+#write_csv("no_blanks.csv", rows_to_keep) #this file now contains no missing blanks.
 
 
